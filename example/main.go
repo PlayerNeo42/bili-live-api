@@ -1,39 +1,16 @@
-# B站直播API
-
-B站直播相关API的Go语言实现
-
-目前仅支持直播间弹幕相关API
-
-## 支持
-
-- 弹幕接收和发送
-- 礼物
-- 超级留言
-
-## 快速开始
-
-### 安装
-
-```shell 
-go get github.com/botplayerneo/bili-live-api
-```
-
-### 使用
-
-```go
 package main
 
 import (
 	"fmt"
+
 	api "github.com/botplayerneo/bili-live-api"
 	"github.com/botplayerneo/bili-live-api/dto"
 	"github.com/botplayerneo/bili-live-api/websocket"
 )
 
 func main() {
-	l := api.NewLive(510)
+	l := api.NewLive(213)
 
-	// 内部通过type switch来判断handler类型
 	l.RegisterHandlers(
 		danmakuHandler(),
 		giftHandler(),
@@ -67,8 +44,3 @@ func superChatHandler() websocket.SuperChatHandler {
 		fmt.Printf("[%d￥SC]%s:%s\n", superChat.Price, superChat.UserInfo.Uname, superChat.Message)
 	}
 }
-```
-
-## 相关
-
-项目组织结构参考: [botgo](https://github.com/tencent-connect/botgo)
