@@ -66,6 +66,7 @@ func brotliDecompressor() rawDataParser {
 	}
 }
 
+// Decode 将二进制数据转换为 *dto.WSPayload 类型
 func Decode(data []byte) *dto.WSPayload {
 	l := binary.BigEndian.Uint32(data[0:4])
 	pv := binary.BigEndian.Uint16(data[6:8])
@@ -81,6 +82,7 @@ func Decode(data []byte) *dto.WSPayload {
 	}
 }
 
+// Encode 将 *dto.WSPayload 类型转换为二进制数据
 func Encode(p *dto.WSPayload) []byte {
 	if p.RawBytes != nil {
 		return p.RawBytes

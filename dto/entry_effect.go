@@ -1,9 +1,9 @@
 package dto
 
 type EntryEffect struct {
-	Id               int           `json:"id"`
-	Uid              int           `json:"uid"`
-	TargetId         int           `json:"target_id"`
+	ID               int           `json:"id"`
+	UID              int           `json:"uid"`
+	TargetID         int           `json:"target_id"`
 	MockEffect       int           `json:"mock_effect"`
 	Face             string        `json:"face"`
 	PrivilegeType    int           `json:"privilege_type"`
@@ -11,10 +11,10 @@ type EntryEffect struct {
 	CopyColor        string        `json:"copy_color"`
 	HighlightColor   string        `json:"highlight_color"`
 	Priority         int           `json:"priority"`
-	BasemapUrl       string        `json:"basemap_url"`
+	BasemapURL       string        `json:"basemap_url"`
 	ShowAvatar       int           `json:"show_avatar"`
 	EffectiveTime    int           `json:"effective_time"`
-	WebBasemapUrl    string        `json:"web_basemap_url"`
+	WebBasemapURL    string        `json:"web_basemap_url"`
 	WebEffectiveTime int           `json:"web_effective_time"`
 	WebEffectClose   int           `json:"web_effect_close"`
 	WebCloseTime     int           `json:"web_close_time"`

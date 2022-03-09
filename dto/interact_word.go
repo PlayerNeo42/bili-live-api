@@ -16,7 +16,7 @@ type InteractWord struct {
 	TailIcon    int    `json:"tail_icon"`
 	Timestamp   int    `json:"timestamp"`
 	TriggerTime int64  `json:"trigger_time"`
-	Uid         int    `json:"uid"`
+	UID         int    `json:"uid"`
 	Uname       string `json:"uname"`
 	UnameColor  string `json:"uname_color"`
 }

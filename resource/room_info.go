@@ -4,6 +4,7 @@ import (
 	"strconv"
 )
 
+// GetRoomInfo 获取直播间详细信息
 func GetRoomInfo(shortID int) (*RoomInfo, error) {
 	result := &RoomInfo{}
 	_, err := apiClient.R().
@@ -17,7 +18,8 @@ func GetRoomInfo(shortID int) (*RoomInfo, error) {
 	return result, nil
 }
 
-func GetRoomID(shortID int) (int, error) {
+// RealRoomID 获取直播房间真实ID,主要用于websocket连接
+func RealRoomID(shortID int) (int, error) {
 	info, err := GetRoomInfo(shortID)
 	if err != nil {
 		return 0, err
@@ -25,6 +27,7 @@ func GetRoomID(shortID int) (int, error) {
 	return info.Data.RoomID, nil
 }
 
+// RoomInfo 直播房间信息
 type RoomInfo struct {
 	Code    int    `json:"code"`
 	Msg     string `json:"msg"`

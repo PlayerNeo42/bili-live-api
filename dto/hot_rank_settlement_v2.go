@@ -7,7 +7,7 @@ type HotRankSettlementV2 struct {
 	Timestamp int    `json:"timestamp"`
 	Icon      string `json:"icon"`
 	AreaName  string `json:"area_name"`
-	Url       string `json:"url"`
+	URL       string `json:"url"`
 	CacheKey  string `json:"cache_key"`
 	DmMsg     string `json:"dm_msg"`
 }

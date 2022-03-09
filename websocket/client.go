@@ -16,6 +16,7 @@ var heartbeatPayload = &dto.WSPayload{
 	Body:            nil,
 }
 
+// Client websocket客户端实例
 type Client struct {
 	conn            *wss.Conn
 	heartbeatTicker *time.Ticker
@@ -23,6 +24,7 @@ type Client struct {
 	messageCh       chan *dto.WSPayload
 }
 
+// New 创建websocket客户端
 func New() *Client {
 	return &Client{
 		heartbeatTicker: time.NewTicker(15 * time.Second),
@@ -31,6 +33,7 @@ func New() *Client {
 	}
 }
 
+// Connect 连接到B站直播服务端
 func (c *Client) Connect() error {
 	var err error
 	c.conn, _, err = wss.DefaultDialer.Dial(resource.WSUrl, nil)
@@ -64,6 +67,7 @@ func (c *Client) Listening() error {
 	}
 }
 
+// Close 关闭websocket连接,停止心跳
 func (c *Client) Close() {
 	if err := c.conn.Close(); err != nil {
 		log.Errorf("%s, close conn err: %v", err)

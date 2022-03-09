@@ -34,14 +34,14 @@ type NoticeMsg struct {
 	RealRoomID int    `json:"real_roomid"`
 	MsgCommon  string `json:"msg_common"`
 	MsgSelf    string `json:"msg_self"`
-	LinkUrl    string `json:"link_url"`
+	LinkURL    string `json:"link_url"`
 	MsgType    int    `json:"msg_type"`
-	ShieldUid  int    `json:"shield_uid"`
-	BusinessId string `json:"business_id"`
+	ShieldUID  int    `json:"shield_uid"`
+	BusinessID string `json:"business_id"`
 	Scatter    struct {
 		Min int `json:"min"`
 		Max int `json:"max"`
 	} `json:"scatter"`
-	MarqueeId  string `json:"marquee_id"`
+	MarqueeID  string `json:"marquee_id"`
 	NoticeType int    `json:"notice_type"`
 }

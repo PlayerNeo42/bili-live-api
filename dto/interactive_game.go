@@ -2,10 +2,10 @@ package dto
 
 type InteractiveGame struct {
 	Type           int         `json:"type"`
-	Uid            int         `json:"uid"`
+	UID            int         `json:"uid"`
 	Uname          string      `json:"uname"`
 	UFace          string      `json:"uface"`
-	GiftId         int         `json:"gift_id"`
+	GiftID         int         `json:"gift_id"`
 	GiftName       string      `json:"gift_name"`
 	GiftNum        int         `json:"gift_num"`
 	Price          int         `json:"price"`
@@ -17,7 +17,7 @@ type InteractiveGame struct {
 	AnchorLottery  interface{} `json:"anchor_lottery"`
 	PkInfo         interface{} `json:"pk_info"`
 	AnchorInfo     struct {
-		Uid   int    `json:"uid"`
+		UID   int    `json:"uid"`
 		Uname string `json:"uname"`
 		UFace string `json:"uface"`
 	} `json:"anchor_info"`

@@ -45,7 +45,7 @@ func danmakuHandler(payload *dto.WSPayload) {
 	}
 	info := jsoniter.Get(payload.Body, "info")
 	d := &dto.Danmaku{
-		Uid:       info.Get(2, 0).ToInt(),
+		UID:       info.Get(2, 0).ToInt(),
 		Uname:     info.Get(2, 1).ToString(),
 		Content:   info.Get(1).ToString(),
 		Timestamp: info.Get(0, 4).ToInt64(),

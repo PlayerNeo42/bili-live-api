@@ -9,6 +9,8 @@ func init() {
 }
 
 const (
-	WSUrl  = "wss://broadcastlv.chat.bilibili.com/sub"
+	// WSUrl B站直播websocket接入地址
+	WSUrl = "wss://broadcastlv.chat.bilibili.com/sub"
+	// APIUrl B站API地址
 	APIUrl = "https://api.live.bilibili.com"
 )

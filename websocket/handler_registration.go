@@ -87,6 +87,7 @@ type NoticeMsgHandler func(noticeMsg *dto.NoticeMsg)
 
 // handler_type above(for hygen)
 
+// DefaultEventHandlers 默认事件处理器,由 RegisterHandlers 注册
 var DefaultEventHandlers struct {
 	Live                          LiveHandler
 	Preparing                     PreparingHandler
@@ -117,6 +118,7 @@ var DefaultEventHandlers struct {
 	// handler_struct above(for hygen)
 }
 
+// RegisterHandlers 注册事件处理函数
 func RegisterHandlers(handlers ...interface{}) {
 	for _, h := range handlers {
 		switch handler := h.(type) {

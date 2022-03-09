@@ -1,20 +1,6 @@
 package dto
 
-type User struct {
-	Face       string `json:"face"`
-	FaceFrame  string `json:"face_frame"`
-	GuardLevel int    `json:"guard_level"`
-	IsMainVip  int    `json:"is_main_vip"`
-	IsSVIP     int    `json:"is_svip"`
-	IsVip      int    `json:"is_vip"`
-	LevelColor string `json:"level_color"`
-	Manager    int    `json:"manager"`
-	NameColor  string `json:"name_color"`
-	Title      string `json:"title"`
-	Uname      string `json:"uname"`
-	UserLevel  int    `json:"user_level"`
-}
-
+// SuperChat 超级留言(SC)
 type SuperChat struct {
 	BackgroundBottomColor string  `json:"background_bottom_color"`
 	BackgroundColor       string  `json:"background_color"`
@@ -31,24 +17,40 @@ type SuperChat struct {
 		GiftName string `json:"gift_name"`
 		Num      int    `json:"num"`
 	} `json:"gift"`
-	ID               int    `json:"id"`
-	IsRanked         int    `json:"is_ranked"`
-	IsSendAudit      int    `json:"is_send_audit"`
-	MedalInfo        Medal  `json:"medal_info"`
-	Message          string `json:"message"`
-	MessageFontColor string `json:"message_font_color"`
-	MessageTrans     string `json:"message_trans"`
-	Price            int    `json:"price"`
-	Rate             int    `json:"rate"`
-	StartTime        int    `json:"start_time"`
-	Time             int    `json:"time"`
-	Token            string `json:"token"`
-	TransMark        int    `json:"trans_mark"`
-	Ts               int    `json:"ts"`
-	Uid              int    `json:"uid"`
-	UserInfo         User   `json:"user_info"`
+	ID               int      `json:"id"`
+	IsRanked         int      `json:"is_ranked"`
+	IsSendAudit      int      `json:"is_send_audit"`
+	MedalInfo        Medal    `json:"medal_info"`
+	Message          string   `json:"message"`
+	MessageFontColor string   `json:"message_font_color"`
+	MessageTrans     string   `json:"message_trans"`
+	Price            int      `json:"price"`
+	Rate             int      `json:"rate"`
+	StartTime        int      `json:"start_time"`
+	Time             int      `json:"time"`
+	Token            string   `json:"token"`
+	TransMark        int      `json:"trans_mark"`
+	Ts               int      `json:"ts"`
+	UID              int      `json:"uid"`
+	UserInfo         userInfo `json:"user_info"`
 }
 
+// SuperChatDelete 删除SC,IDs数组中的ID对应superChat.ID
 type SuperChatDelete struct {
 	IDs []int `json:"ids"`
+}
+
+type userInfo struct {
+	Face       string `json:"face"`
+	FaceFrame  string `json:"face_frame"`
+	GuardLevel int    `json:"guard_level"`
+	IsMainVip  int    `json:"is_main_vip"`
+	IsSVIP     int    `json:"is_svip"`
+	IsVip      int    `json:"is_vip"`
+	LevelColor string `json:"level_color"`
+	Manager    int    `json:"manager"`
+	NameColor  string `json:"name_color"`
+	Title      string `json:"title"`
+	Uname      string `json:"uname"`
+	UserLevel  int    `json:"user_level"`
 }

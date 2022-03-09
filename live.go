@@ -25,7 +25,7 @@ func NewLive(roomID int) *Live {
 
 // Start 接收房间号，开始websocket心跳连接并阻塞
 func (l *Live) Start() {
-	id, err := resource.GetRoomID(l.roomID)
+	id, err := resource.RealRoomID(l.roomID)
 	if err != nil {
 		log.Errorf("获取房间ID失败：%v", err)
 		return
@@ -44,6 +44,11 @@ func (l *Live) Start() {
 	}
 }
 
+// RegisterHandlers 注册不同的事件处理
+// handler类型需要是定义在 websocket/handler_registration.go 中的类型，如:
+// - websocket.DanmakuHandler
+// - websocket.GiftHandler
+// - websocket.GuardHandler
 func (l *Live) RegisterHandlers(handlers ...interface{}) {
 	websocket.RegisterHandlers(handlers...)
 }
