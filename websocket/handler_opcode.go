@@ -23,7 +23,7 @@ func notificationHandler(payload *dto.WSPayload) {
 	handler, ok := eventPayloadHandlerMap[eventType]
 	if !ok {
 		log.Debugf("未知cmd类型: %s", eventType)
-
+		unknownEventHandler(payload)
 		return
 	}
 	handler(payload)

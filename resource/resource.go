@@ -2,15 +2,16 @@ package resource
 
 import "github.com/go-resty/resty/v2"
 
-var apiClient = resty.New()
-
-func init() {
-	apiClient.SetBaseURL(APIUrl)
-}
-
 const (
 	// WSUrl B站直播websocket接入地址
 	WSUrl = "wss://broadcastlv.chat.bilibili.com/sub"
-	// APIUrl B站API地址
-	APIUrl = "https://api.live.bilibili.com"
+	// LiveAPIURL B站直播API地址
+	LiveAPIURL = "https://api.live.bilibili.com"
+	// APIURL B站API地址
+	APIURL = "https://api.bilibili.com"
+)
+
+var (
+	liveAPIClient = resty.New().SetBaseURL(LiveAPIURL)
+	apiClient     = resty.New().SetBaseURL(APIURL)
 )

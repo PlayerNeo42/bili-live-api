@@ -36,6 +36,16 @@ var eventPayloadHandlerMap = map[dto.EventType]eventPayloadHandler{
 	dto.EventPopularityRedPocketStart:      popularityRedPocketStartHandler,
 	dto.EventPopularityRedPocketWinnerList: popularityRedPocketWinnerListHandler,
 	dto.EventNoticeMsg:                     noticeMsgHandler,
+	dto.EventAnchorLotAward:                anchorLotAwardHandler,
+	dto.EventUserToastMsg:                  userToastMsgHandler,
+	dto.EventRoomChange:                    roomChangeHandler,
+	dto.EventRoomBlockMsg:                  roomBlockMsgHandler,
+	dto.EventMatchRoomConf:                 matchRoomConfHandler,
+	dto.EventCommonNoticeDanmaku:           commonNoticeDanmakuHandler,
+	dto.EventAnchorLotCheckStatus:          anchorLotCheckStatusHandler,
+	dto.EventAnchorLotEnd:                  anchorLotEndHandler,
+	dto.EventAnchorLotStart:                anchorLotStartHandler,
+	dto.EventTradingScore:                  tradingScoreHandler,
 	// handler_map(for hygen)
 }
 
@@ -267,6 +277,103 @@ func noticeMsgHandler(payload *dto.WSPayload) {
 		return
 	}
 	DefaultEventHandlers.NoticeMsg(data)
+}
+
+func unknownEventHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.UnknownEvent == nil {
+		return
+	}
+	DefaultEventHandlers.UnknownEvent(payload)
+}
+
+func anchorLotAwardHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.AnchorLotAward == nil {
+		return
+	}
+	data := &dto.AnchorLotAward{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.AnchorLotAward(data)
+}
+
+func userToastMsgHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.UserToastMsg == nil {
+		return
+	}
+	data := &dto.UserToastMsg{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.UserToastMsg(data)
+}
+
+func roomChangeHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.RoomChange == nil {
+		return
+	}
+	data := &dto.RoomChange{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.RoomChange(data)
+}
+
+func roomBlockMsgHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.RoomBlockMsg == nil {
+		return
+	}
+	data := &dto.RoomBlockMsg{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.RoomBlockMsg(data)
+}
+
+func matchRoomConfHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.MatchRoomConf == nil {
+		return
+	}
+	data := &dto.MatchRoomConf{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.MatchRoomConf(data)
+}
+
+func commonNoticeDanmakuHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.CommonNoticeDanmaku == nil {
+		return
+	}
+	data := &dto.CommonNoticeDanmaku{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.CommonNoticeDanmaku(data)
+}
+
+func anchorLotCheckStatusHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.AnchorLotCheckstatus == nil {
+		return
+	}
+	data := &dto.AnchorLotCheckStatus{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.AnchorLotCheckstatus(data)
+}
+
+func anchorLotEndHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.AnchorLotEnd == nil {
+		return
+	}
+	data := &dto.AnchorLotEnd{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.AnchorLotEnd(data)
+}
+
+func anchorLotStartHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.AnchorLotStart == nil {
+		return
+	}
+	data := &dto.AnchorLotStart{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.AnchorLotStart(data)
+}
+
+func tradingScoreHandler(payload *dto.WSPayload) {
+	if DefaultEventHandlers.TradingScore == nil {
+		return
+	}
+	data := &dto.TradingScore{}
+	jsoniter.Get(payload.Body, "data").ToVal(data)
+	DefaultEventHandlers.TradingScore(data)
 }
 
 // handler_impl(for hygen)

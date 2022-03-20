@@ -1,10 +1,9 @@
 package websocket
 
 import (
-	"os"
+	"fmt"
 
 	"github.com/botplayerneo/bili-live-api/dto"
-	"github.com/botplayerneo/bili-live-api/log"
 )
 
 // LiveHandler 开播
@@ -85,7 +84,40 @@ type PopularityRedPocketWinnerListHandler func(popularityRedPocketWinnerList *dt
 // NoticeMsgHandler 公告消息
 type NoticeMsgHandler func(noticeMsg *dto.NoticeMsg)
 
+// AnchorLotAwardHandler 天选之人中奖完整信息
+type AnchorLotAwardHandler func(anchorLotAward *dto.AnchorLotAward)
+
+// UserToastMsgHandler 弹幕栏中显示的toast信息，如xxx自动续费了舰长，xxx开通了舰长
+type UserToastMsgHandler func(userToastMsg *dto.UserToastMsg)
+
+// RoomChangeHandler 疑似房间标题变更
+type RoomChangeHandler func(roomChange *dto.RoomChange)
+
+// RoomBlockMsgHandler 房管禁言
+type RoomBlockMsgHandler func(roomBlockMsg *dto.RoomBlockMsg)
+
+// MatchRoomConfHandler 未知
+type MatchRoomConfHandler func(matchRoomConf *dto.MatchRoomConf)
+
+// CommonNoticeDanmakuHandler 提示信息,如'恭喜主播完成"小小花束"任务'
+type CommonNoticeDanmakuHandler func(commonNoticeDanmaku *dto.CommonNoticeDanmaku)
+
+// AnchorLotCheckStatusHandler 天选之人相关
+type AnchorLotCheckStatusHandler func(anchorLotCheckStatus *dto.AnchorLotCheckStatus)
+
+// AnchorLotEndHandler 天选之人相关
+type AnchorLotEndHandler func(anchorLotEnd *dto.AnchorLotEnd)
+
+// AnchorLotStartHandler 天选之人抽奖开始
+type AnchorLotStartHandler func(anchorLotStart *dto.AnchorLotStart)
+
+// TradingScoreHandler 未知
+type TradingScoreHandler func(tradingScore *dto.TradingScore)
+
 // handler_type above(for hygen)
+
+// UnknownEventHandler 未知消息
+type UnknownEventHandler func(unknownEvent *dto.WSPayload)
 
 // DefaultEventHandlers 默认事件处理器,由 RegisterHandlers 注册
 var DefaultEventHandlers struct {
@@ -115,11 +147,22 @@ var DefaultEventHandlers struct {
 	PopularityRedPocketStart      PopularityRedPocketStartHandler
 	PopularityRedPocketWinnerList PopularityRedPocketWinnerListHandler
 	NoticeMsg                     NoticeMsgHandler
+	AnchorLotAward                AnchorLotAwardHandler
+	UserToastMsg                  UserToastMsgHandler
+	RoomChange                    RoomChangeHandler
+	RoomBlockMsg                  RoomBlockMsgHandler
+	MatchRoomConf                 MatchRoomConfHandler
+	CommonNoticeDanmaku           CommonNoticeDanmakuHandler
+	AnchorLotCheckstatus          AnchorLotCheckStatusHandler
+	AnchorLotEnd                  AnchorLotEndHandler
+	AnchorLotStart                AnchorLotStartHandler
+	TradingScore                  TradingScoreHandler
 	// handler_struct above(for hygen)
+	UnknownEvent UnknownEventHandler
 }
 
 // RegisterHandlers 注册事件处理函数
-func RegisterHandlers(handlers ...interface{}) {
+func RegisterHandlers(handlers ...interface{}) error {
 	for _, h := range handlers {
 		switch handler := h.(type) {
 		case DanmakuHandler:
@@ -134,6 +177,10 @@ func RegisterHandlers(handlers ...interface{}) {
 			DefaultEventHandlers.Guard = handler
 		case PopularityHandler:
 			DefaultEventHandlers.Popularity = handler
+		case LiveHandler:
+			DefaultEventHandlers.Live = handler
+		case PreparingHandler:
+			DefaultEventHandlers.Preparing = handler
 		case EntryEffectHandler:
 			DefaultEventHandlers.EntryEffect = handler
 		case InteractWordHandler:
@@ -170,9 +217,31 @@ func RegisterHandlers(handlers ...interface{}) {
 			DefaultEventHandlers.PopularityRedPocketWinnerList = handler
 		case NoticeMsgHandler:
 			DefaultEventHandlers.NoticeMsg = handler
+		case UnknownEventHandler:
+			DefaultEventHandlers.UnknownEvent = handler
+		case AnchorLotAwardHandler:
+			DefaultEventHandlers.AnchorLotAward = handler
+		case UserToastMsgHandler:
+			DefaultEventHandlers.UserToastMsg = handler
+		case RoomChangeHandler:
+			DefaultEventHandlers.RoomChange = handler
+		case RoomBlockMsgHandler:
+			DefaultEventHandlers.RoomBlockMsg = handler
+		case MatchRoomConfHandler:
+			DefaultEventHandlers.MatchRoomConf = handler
+		case CommonNoticeDanmakuHandler:
+			DefaultEventHandlers.CommonNoticeDanmaku = handler
+		case AnchorLotCheckStatusHandler:
+			DefaultEventHandlers.AnchorLotCheckstatus = handler
+		case AnchorLotEndHandler:
+			DefaultEventHandlers.AnchorLotEnd = handler
+		case AnchorLotStartHandler:
+			DefaultEventHandlers.AnchorLotStart = handler
+		case TradingScoreHandler:
+			DefaultEventHandlers.TradingScore = handler
 		default:
-			log.Errorf("未知handler类型: %T", handler)
-			os.Exit(1)
+			return fmt.Errorf("未知handler类型: %T", handler)
 		}
 	}
+	return nil
 }

@@ -4,31 +4,8 @@ import (
 	"strconv"
 )
 
-// GetRoomInfo 获取直播间详细信息
-func GetRoomInfo(shortID int) (*RoomInfo, error) {
-	result := &RoomInfo{}
-	_, err := apiClient.R().
-		EnableTrace().
-		SetQueryParam("id", strconv.Itoa(shortID)).
-		SetResult(result).
-		Get("/room/v1/Room/room_init")
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
-}
-
-// RealRoomID 获取直播房间真实ID,主要用于websocket连接
-func RealRoomID(shortID int) (int, error) {
-	info, err := GetRoomInfo(shortID)
-	if err != nil {
-		return 0, err
-	}
-	return info.Data.RoomID, nil
-}
-
-// RoomInfo 直播房间信息
-type RoomInfo struct {
+// RoomInfoResp 直播房间信息
+type RoomInfoResp struct {
 	Code    int    `json:"code"`
 	Msg     string `json:"msg"`
 	Message string `json:"message"`
@@ -50,4 +27,27 @@ type RoomInfo struct {
 		IsSp        int   `json:"is_sp"`
 		SpecialType int   `json:"special_type"`
 	} `json:"data"`
+}
+
+// GetRoomInfo 获取直播间详细信息
+func GetRoomInfo(shortID int) (*RoomInfoResp, error) {
+	result := &RoomInfoResp{}
+	_, err := liveAPIClient.R().
+		EnableTrace().
+		SetQueryParam("id", strconv.Itoa(shortID)).
+		SetResult(result).
+		Get("/room/v1/Room/room_init")
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// RealRoomID 获取直播房间真实ID,主要用于websocket连接
+func RealRoomID(shortID int) (int, error) {
+	info, err := GetRoomInfo(shortID)
+	if err != nil {
+		return 0, err
+	}
+	return info.Data.RoomID, nil
 }

@@ -5,6 +5,7 @@ import (
 
 	api "github.com/botplayerneo/bili-live-api"
 	"github.com/botplayerneo/bili-live-api/dto"
+	"github.com/botplayerneo/bili-live-api/log"
 	"github.com/botplayerneo/bili-live-api/websocket"
 )
 
@@ -17,6 +18,8 @@ func main() {
 		guardHandler(),
 		superChatHandler(),
 	)
+
+	log.SetLogLevel(log.LevelWarn)
 
 	l.Start()
 }

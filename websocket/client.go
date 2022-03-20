@@ -10,6 +10,10 @@ import (
 	"github.com/botplayerneo/bili-live-api/resource"
 )
 
+const (
+	heartBeatInterval = time.Second * 30
+)
+
 var heartbeatPayload = &dto.WSPayload{
 	ProtocolVersion: dto.JSON,
 	Operation:       dto.Heartbeat,
@@ -27,8 +31,8 @@ type Client struct {
 // New 创建websocket客户端
 func New() *Client {
 	return &Client{
-		heartbeatTicker: time.NewTicker(15 * time.Second),
-		messageCh:       make(chan *dto.WSPayload, 10000),
+		heartbeatTicker: time.NewTicker(heartBeatInterval),
+		messageCh:       make(chan *dto.WSPayload, 10), // TODO debug
 		closeCh:         make(chan struct{}, 10),
 	}
 }
@@ -41,7 +45,7 @@ func (c *Client) Connect() error {
 		log.Errorf("websocket connect error: %v", err)
 		return err
 	}
-	log.Info("websocket连接成功")
+	log.Debug("websocket连接成功")
 	return nil
 }
 
@@ -63,6 +67,7 @@ func (c *Client) Listening() error {
 				log.Errorf("发送心跳失败: %v", err)
 				return err
 			}
+			log.Infof("发送心跳成功")
 		}
 	}
 }
@@ -81,6 +86,7 @@ func (c *Client) Write(payload *dto.WSPayload) error {
 		log.Errorf("websocket send: %v", err)
 		return err
 	}
+	log.Debugf("websocket send: %+v", payload)
 	return nil
 }
 
@@ -88,9 +94,9 @@ func (c *Client) readMessage() {
 	for {
 		_, message, err := c.conn.ReadMessage()
 		if err != nil {
+			log.Errorf("websocket read error: %v", err)
 			close(c.messageCh)
 			c.closeCh <- struct{}{}
-			log.Errorf("websocket read error: %v", err)
 			return
 		}
 		c.messageCh <- Decode(message)

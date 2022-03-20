@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	jsoniter "github.com/json-iterator/go"
 
 	"github.com/botplayerneo/bili-live-api/dto"
@@ -24,24 +26,22 @@ func NewLive(roomID int) *Live {
 }
 
 // Start 接收房间号，开始websocket心跳连接并阻塞
-func (l *Live) Start() {
+func (l *Live) Start() error {
 	id, err := resource.RealRoomID(l.roomID)
 	if err != nil {
-		log.Errorf("获取房间ID失败：%v", err)
-		return
+		return fmt.Errorf("获取房间ID失败：%v", err)
 	}
 
 	if err := l.client.Connect(); err != nil {
-		log.Errorf("连接websocket失败：%v", err)
-		return
+		return fmt.Errorf("连接websocket失败：%v", err)
 	}
 
 	go l.enterRoom(id)
 
 	if err := l.client.Listening(); err != nil {
-		log.Errorf("监听websocket失败：%v", err)
-		return
+		return fmt.Errorf("监听websocket失败：%v", err)
 	}
+	return nil
 }
 
 // RegisterHandlers 注册不同的事件处理
@@ -49,8 +49,8 @@ func (l *Live) Start() {
 // - websocket.DanmakuHandler
 // - websocket.GiftHandler
 // - websocket.GuardHandler
-func (l *Live) RegisterHandlers(handlers ...interface{}) {
-	websocket.RegisterHandlers(handlers...)
+func (l *Live) RegisterHandlers(handlers ...interface{}) error {
+	return websocket.RegisterHandlers(handlers...)
 }
 
 // 发送进入房间请求
