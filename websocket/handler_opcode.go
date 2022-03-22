@@ -20,11 +20,11 @@ var opCodeHandlerMap = map[dto.OPCode]opCodeHandler{
 // 通知类消息，弹幕、礼物等
 func notificationHandler(payload *dto.WSPayload) {
 	eventType := dto.EventType(jsoniter.Get(payload.Body, "cmd").ToString())
+	log.Debug("收到CMD消息:", eventType, string(payload.Body))
 	handler, ok := eventPayloadHandlerMap[eventType]
 	if !ok {
 		log.Debugf("未知cmd类型: %s", eventType)
-		unknownEventHandler(payload)
-		return
+		handler = unknownEventHandler
 	}
 	handler(payload)
 }
@@ -36,6 +36,7 @@ func heartbeatResponseHandler(payload *dto.WSPayload) {
 	}
 	popularity := binary.BigEndian.Uint32(payload.Body)
 	DefaultEventHandlers.Popularity(popularity)
+	log.Debug("收到心跳回应,人气值:", popularity)
 }
 
 // 进房回应，body为空

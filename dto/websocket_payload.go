@@ -2,7 +2,7 @@ package dto
 
 type WSPayload struct {
 	RawBytes        []byte // RawBytes is the encoded result
-	PacketLength    int    // PacketLength will be calculated during build()
+	PacketLength    int    // PacketLength will be calculated during Encode()
 	HeaderLength    int    // HeaderLength is currently a fixed number 16
 	ProtocolVersion ProtoVer
 	Operation       OPCode

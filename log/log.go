@@ -2,7 +2,7 @@
 package log
 
 // DefaultLogger 默认logger
-var DefaultLogger = Logger(new(consoleLogger))
+var DefaultLogger Logger = new(consoleLogger)
 
 // Debug log.Debug
 func Debug(v ...interface{}) {
@@ -73,6 +73,7 @@ func Sync() {
 	_ = DefaultLogger.Sync()
 }
 
+// SetLogLevel set log level defaults to LevelInfo
 func SetLogLevel(l Level) {
 	level = l
 }

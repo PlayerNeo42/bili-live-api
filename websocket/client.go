@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"fmt"
 	"time"
 
 	wss "github.com/gorilla/websocket"
@@ -11,7 +12,7 @@ import (
 )
 
 const (
-	heartBeatInterval = time.Second * 30
+	heartbeatInterval = time.Second * 30
 )
 
 var heartbeatPayload = &dto.WSPayload{
@@ -31,7 +32,7 @@ type Client struct {
 // New 创建websocket客户端
 func New() *Client {
 	return &Client{
-		heartbeatTicker: time.NewTicker(heartBeatInterval),
+		heartbeatTicker: time.NewTicker(heartbeatInterval),
 		messageCh:       make(chan *dto.WSPayload, 10), // TODO debug
 		closeCh:         make(chan struct{}, 10),
 	}
@@ -58,9 +59,8 @@ func (c *Client) Listening() error {
 	for {
 		select {
 		case <-c.closeCh:
-			log.Infof("收到关闭信号,关闭心跳")
 			c.Close()
-			return nil
+			return fmt.Errorf("websocket连接关闭")
 		case <-c.heartbeatTicker.C:
 			err := c.Write(heartbeatPayload)
 			if err != nil {

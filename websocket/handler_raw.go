@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"compress/zlib"
 	"encoding/binary"
+	"fmt"
 	"io"
 	"os"
 
@@ -14,7 +15,11 @@ import (
 func parseAndHandle(p *dto.WSPayload) error {
 	payloads := rawDataParserMap[p.ProtocolVersion](p)
 	for _, payload := range payloads {
-		opCodeHandlerMap[payload.Operation](payload)
+		handler, ok := opCodeHandlerMap[payload.Operation]
+		if !ok {
+			return fmt.Errorf("未知的操作码:%d Body:%s", payload.Operation, string(p.Body))
+		}
+		handler(payload)
 	}
 	return nil
 }
