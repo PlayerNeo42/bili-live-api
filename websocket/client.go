@@ -33,7 +33,7 @@ type Client struct {
 func New() *Client {
 	return &Client{
 		heartbeatTicker: time.NewTicker(heartbeatInterval),
-		messageCh:       make(chan *dto.WSPayload, 10), // TODO debug
+		messageCh:       make(chan *dto.WSPayload, 10),
 		closeCh:         make(chan struct{}, 10),
 	}
 }
@@ -67,7 +67,7 @@ func (c *Client) Listening() error {
 				log.Errorf("发送心跳失败: %v", err)
 				return err
 			}
-			log.Infof("发送心跳成功")
+			log.Debugf("发送心跳成功")
 		}
 	}
 }

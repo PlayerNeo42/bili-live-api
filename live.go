@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"time"
 
 	jsoniter "github.com/json-iterator/go"
 
@@ -21,12 +22,23 @@ type Live struct {
 func NewLive(roomID int) *Live {
 	return &Live{
 		roomID: roomID,
-		client: websocket.New(),
 	}
 }
 
 // Start 接收房间号，开始websocket心跳连接并阻塞
-func (l *Live) Start() error {
+func (l *Live) Start() {
+	for {
+		l.client = websocket.New()
+		if err := l.Listen(); err != nil {
+			log.Warnf("连接失败:%v,重连中...", err)
+			time.Sleep(5 * time.Second)
+			continue
+		}
+		break
+	}
+}
+
+func (l *Live) Listen() error {
 	id, err := resource.RealRoomID(l.roomID)
 	if err != nil {
 		return fmt.Errorf("获取房间ID失败：%v", err)
@@ -36,6 +48,7 @@ func (l *Live) Start() error {
 		return fmt.Errorf("连接websocket失败：%v", err)
 	}
 
+	// TODO 发送进房包,可能有顺序问题
 	go l.enterRoom(id)
 
 	if err := l.client.Listening(); err != nil {
