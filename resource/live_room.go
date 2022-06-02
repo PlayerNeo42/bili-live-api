@@ -43,7 +43,7 @@ func GetRoomInfo(shortID int) (*RoomInfoResp, error) {
 	return result, nil
 }
 
-// RealRoomID 获取直播房间真实ID,主要用于websocket连接
+// RealRoomID 获取真实直播房间号,主要用于websocket连接
 func RealRoomID(shortID int) (int, error) {
 	info, err := GetRoomInfo(shortID)
 	if err != nil {

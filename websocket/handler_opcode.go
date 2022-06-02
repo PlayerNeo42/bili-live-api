@@ -41,5 +41,5 @@ func heartbeatResponseHandler(payload *dto.WSPayload) {
 
 // 进房回应，body为空
 func roomEnterResponseHandler(payload *dto.WSPayload) {
-	log.Info("进房成功")
+	log.Debug("进房成功")
 }

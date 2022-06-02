@@ -30,7 +30,7 @@ func (l *Live) Start() {
 	for {
 		l.client = websocket.New()
 		if err := l.Listen(); err != nil {
-			log.Warnf("连接失败:%v,重连中...", err)
+			log.Warnf("连接失败, 重连中...:%v", err)
 			time.Sleep(5 * time.Second)
 			continue
 		}
@@ -41,7 +41,7 @@ func (l *Live) Start() {
 func (l *Live) Listen() error {
 	id, err := resource.RealRoomID(l.roomID)
 	if err != nil {
-		return fmt.Errorf("获取房间ID失败：%v", err)
+		return fmt.Errorf("获取房间号失败：%v", err)
 	}
 
 	if err := l.client.Connect(); err != nil {
