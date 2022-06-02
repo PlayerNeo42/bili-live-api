@@ -77,3 +77,13 @@ func Sync() {
 func SetLogLevel(l Level) {
 	level = l
 }
+
+// ReplaceDefault 替换默认 logger, 需要实现 Logger 接口
+func ReplaceDefault(l Logger) {
+	DefaultLogger = l
+}
+
+// Disable 关闭内置 logger
+func Disable() {
+	SetLogLevel(LevelNone)
+}
