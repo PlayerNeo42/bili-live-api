@@ -10,16 +10,23 @@ import (
 )
 
 func main() {
-	l := api.NewLive(213)
+	// 设置内部 logger 打印等级
+	log.SetLogLevel(log.LevelWarn)
 
-	l.RegisterHandlers(
+	// 参数为房间号
+	l := api.NewLive(510)
+
+	// 内部通过type switch来判断handler类型
+	// handler类型定义在websocket包中
+	err := l.RegisterHandlers(
 		danmakuHandler(),
 		giftHandler(),
 		guardHandler(),
 		superChatHandler(),
 	)
-
-	log.SetLogLevel(log.LevelWarn)
+	if err != nil {
+		panic(err)
+	}
 
 	l.Start()
 }
