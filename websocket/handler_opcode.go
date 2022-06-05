@@ -2,6 +2,7 @@ package websocket
 
 import (
 	"encoding/binary"
+	"strings"
 
 	jsoniter "github.com/json-iterator/go"
 
@@ -19,12 +20,20 @@ var opCodeHandlerMap = map[dto.OPCode]opCodeHandler{
 
 // 通知类消息，弹幕、礼物等
 func notificationHandler(payload *dto.WSPayload) {
-	eventType := dto.EventType(jsoniter.Get(payload.Body, "cmd").ToString())
-	log.Debug("收到CMD消息:", eventType, string(payload.Body))
-	handler, ok := eventPayloadHandlerMap[eventType]
-	if !ok {
-		log.Debugf("未知cmd类型: %s", eventType)
-		handler = unknownEventHandler
+	eType := jsoniter.Get(payload.Body, "cmd").ToString()
+	var handler eventPayloadHandler
+	// HACK 更新后收到的cmd会变为"DANMU_MSG:4:0:2:2:2:0", 在此特殊处理
+	if strings.HasPrefix(eType, "DANMU_MSG") {
+		handler = eventPayloadHandlerMap[dto.EventDanmaku]
+	} else {
+		eventType := dto.EventType(eType)
+		log.Debug("收到CMD消息:", eventType, string(payload.Body))
+		var ok bool
+		handler, ok = eventPayloadHandlerMap[eventType]
+		if !ok {
+			log.Debugf("未知cmd类型: %s", eventType)
+			handler = unknownEventHandler
+		}
 	}
 	handler(payload)
 }

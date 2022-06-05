@@ -72,10 +72,10 @@ func (l *Live) enterRoom(id int) {
 	// 忽略错误
 	var err error
 	body, _ := jsoniter.Marshal(dto.WSEnterRoomBody{
-		RoomID:    id, // 真实房间ID
-		ProtoVer:  1,  // 填1
-		Platform:  "web",
-		ClientVer: "1.6.3",
+		RoomID:   id, // 真实房间ID
+		ProtoVer: 3,  // 填3
+		Platform: "web",
+		Type:     2,
 	})
 	if err = l.client.Write(&dto.WSPayload{
 		ProtocolVersion: dto.JSON,

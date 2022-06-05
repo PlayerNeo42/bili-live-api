@@ -8,6 +8,8 @@ import (
 	"io"
 	"os"
 
+	"github.com/andybalholm/brotli"
+
 	"github.com/botplayerneo/bili-live-api/dto"
 	"github.com/botplayerneo/bili-live-api/log"
 )
@@ -65,9 +67,15 @@ func zlibDecompressor() rawDataParser {
 
 func brotliDecompressor() rawDataParser {
 	return func(p *dto.WSPayload) []*dto.WSPayload {
-		log.Error("function not defined")
-		os.Exit(1)
-		return nil
+		log.Debug("使用Brotli解压")
+		buf := bytes.NewReader(p.Body)
+		reader := brotli.NewReader(buf)
+		b, err := io.ReadAll(reader)
+		if err != nil {
+			log.Errorf("brotli解压错误: %v", err)
+			os.Exit(1)
+		}
+		return sliceAndParse(b)
 	}
 }
 
