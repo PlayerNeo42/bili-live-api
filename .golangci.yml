@@ -15,7 +15,7 @@ linters-settings:
   gocyclo:
     min-complexity: 10
   goimports:
-    local-prefixes: spelling-dragon/
+    local-prefixes: spellingDragon/
   govet:
     check-shadowing: true
   lll:
