@@ -7,7 +7,7 @@ import (
 	"github.com/botplayerneo/bili-live-api/log"
 )
 
-type eventPayloadHandler func(*dto.WSPayload)
+type eventPayloadHandler func(*dto.WSPayload, *Client)
 
 // 感官上十分冗余，待思考更好的方案
 var eventPayloadHandlerMap = map[dto.EventType]eventPayloadHandler{
@@ -49,8 +49,8 @@ var eventPayloadHandlerMap = map[dto.EventType]eventPayloadHandler{
 	// handler_map(for hygen)
 }
 
-func danmakuHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.Danmaku == nil {
+func danmakuHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.Danmaku == nil {
 		return
 	}
 	info := jsoniter.Get(payload.Body, "info")
@@ -60,214 +60,215 @@ func danmakuHandler(payload *dto.WSPayload) {
 		Content:   info.Get(1).ToString(),
 		Timestamp: info.Get(0, 4).ToInt64(),
 	}
-	DefaultEventHandlers.Danmaku(d)
+	client.DefaultEventHandlers.Danmaku(d)
 }
 
-func giftHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.Gift == nil {
+func giftHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.Gift == nil {
 		return
 	}
 	g := &dto.Gift{}
 	jsoniter.Get(payload.Body, "data").ToVal(g)
-	DefaultEventHandlers.Gift(g)
+	client.DefaultEventHandlers.Gift(g)
 }
 
-func superChatHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.SuperChat == nil {
+func superChatHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.SuperChat == nil {
 		return
 	}
 	sc := &dto.SuperChat{}
 	jsoniter.Get(payload.Body, "data").ToVal(sc)
-	DefaultEventHandlers.SuperChat(sc)
+	client.DefaultEventHandlers.SuperChat(sc)
 }
 
-func superChatDeleteHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.SuperChatDelete == nil {
+func superChatDeleteHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.SuperChatDelete == nil {
 		return
 	}
 	scd := &dto.SuperChatDelete{}
 	jsoniter.Get(payload.Body, "data").ToVal(scd)
-	DefaultEventHandlers.SuperChatDelete(scd)
+	client.DefaultEventHandlers.SuperChatDelete(scd)
 }
 
-func guardHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.Guard == nil {
+func guardHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.Guard == nil {
 		return
 	}
 	g := &dto.Guard{}
 	jsoniter.Get(payload.Body, "data").ToVal(g)
-	DefaultEventHandlers.Guard(g)
+	client.DefaultEventHandlers.Guard(g)
 }
 
-func liveHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.Live == nil {
+func liveHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.Live == nil {
 		return
 	}
-	DefaultEventHandlers.Live()
+
+	client.DefaultEventHandlers.Live()
 }
 
-func preparingHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.Preparing == nil {
+func preparingHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.Preparing == nil {
 		return
 	}
-	DefaultEventHandlers.Preparing()
+	client.DefaultEventHandlers.Preparing()
 }
 
-func entryEffectHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.EntryEffect == nil {
+func entryEffectHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.EntryEffect == nil {
 		return
 	}
 	ee := &dto.EntryEffect{}
 	jsoniter.Get(payload.Body, "data").ToVal(ee)
-	DefaultEventHandlers.EntryEffect(ee)
+	client.DefaultEventHandlers.EntryEffect(ee)
 }
 
-func interactWordHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.InteractWord == nil {
+func interactWordHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.InteractWord == nil {
 		return
 	}
 	iw := &dto.InteractWord{}
 	jsoniter.Get(payload.Body, "data").ToVal(iw)
-	DefaultEventHandlers.InteractWord(iw)
+	client.DefaultEventHandlers.InteractWord(iw)
 }
 
-func comboSendHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.ComboSend == nil {
+func comboSendHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.ComboSend == nil {
 		return
 	}
 	cs := &dto.ComboSend{}
 	jsoniter.Get(payload.Body, "data").ToVal(cs)
-	DefaultEventHandlers.ComboSend(cs)
+	client.DefaultEventHandlers.ComboSend(cs)
 }
 
-func fansChangeHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.FansChange == nil {
+func fansChangeHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.FansChange == nil {
 		return
 	}
 	fc := &dto.FansChange{}
 	jsoniter.Get(payload.Body, "data").ToVal(fc)
-	DefaultEventHandlers.FansChange(fc)
+	client.DefaultEventHandlers.FansChange(fc)
 }
 
-func interactiveGameHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.InteractiveGame == nil {
+func interactiveGameHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.InteractiveGame == nil {
 		return
 	}
 	ig := &dto.InteractiveGame{}
 	jsoniter.Get(payload.Body, "data").ToVal(ig)
-	DefaultEventHandlers.InteractiveGame(ig)
+	client.DefaultEventHandlers.InteractiveGame(ig)
 }
 
-func onlineRankCountHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.OnlineRankCount == nil {
+func onlineRankCountHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.OnlineRankCount == nil {
 		return
 	}
 	orc := &dto.OnlineRankCount{}
 	jsoniter.Get(payload.Body, "data").ToVal(orc)
-	DefaultEventHandlers.OnlineRankCount(orc)
+	client.DefaultEventHandlers.OnlineRankCount(orc)
 }
 
-func hotRankChangedHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.HotRankChanged == nil {
+func hotRankChangedHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.HotRankChanged == nil {
 		return
 	}
 	data := &dto.HotRankChanged{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.HotRankChanged(data)
+	client.DefaultEventHandlers.HotRankChanged(data)
 }
 
-func hotRankChangedV2Handler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.HotRankChangedV2 == nil {
+func hotRankChangedV2Handler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.HotRankChangedV2 == nil {
 		return
 	}
 	data := &dto.HotRankChangedV2{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.HotRankChangedV2(data)
+	client.DefaultEventHandlers.HotRankChangedV2(data)
 }
 
-func hotRankSettlementHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.HotRankSettlement == nil {
+func hotRankSettlementHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.HotRankSettlement == nil {
 		return
 	}
 	data := &dto.HotRankSettlement{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.HotRankSettlement(data)
+	client.DefaultEventHandlers.HotRankSettlement(data)
 }
 
-func hotRankSettlementV2Handler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.HotRankSettlementV2 == nil {
+func hotRankSettlementV2Handler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.HotRankSettlementV2 == nil {
 		return
 	}
 	data := &dto.HotRankSettlementV2{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.HotRankSettlementV2(data)
+	client.DefaultEventHandlers.HotRankSettlementV2(data)
 }
 
-func onlineRankTop3Handler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.OnlineRankTop3 == nil {
+func onlineRankTop3Handler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.OnlineRankTop3 == nil {
 		return
 	}
 	data := &dto.OnlineRankTop3{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.OnlineRankTop3(data)
+	client.DefaultEventHandlers.OnlineRankTop3(data)
 }
 
-func onlineRankV2Handler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.OnlineRankV2 == nil {
+func onlineRankV2Handler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.OnlineRankV2 == nil {
 		return
 	}
 	data := &dto.OnlineRankV2{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.OnlineRankV2(data)
+	client.DefaultEventHandlers.OnlineRankV2(data)
 }
 
-func stopLiveRoomListHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.StopLiveRoomList == nil {
+func stopLiveRoomListHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.StopLiveRoomList == nil {
 		return
 	}
 	data := &dto.StopLiveRoomList{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.StopLiveRoomList(data)
+	client.DefaultEventHandlers.StopLiveRoomList(data)
 }
 
-func watchedChangeHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.WatchedChange == nil {
+func watchedChangeHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.WatchedChange == nil {
 		return
 	}
 	data := &dto.WatchedChange{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.WatchedChange(data)
+	client.DefaultEventHandlers.WatchedChange(data)
 }
 
-func widgetBannerHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.WidgetBanner == nil {
+func widgetBannerHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.WidgetBanner == nil {
 		return
 	}
 	data := &dto.WidgetBanner{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.WidgetBanner(data)
+	client.DefaultEventHandlers.WidgetBanner(data)
 }
 
-func popularityRedPocketStartHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.PopularityRedPocketStart == nil {
+func popularityRedPocketStartHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.PopularityRedPocketStart == nil {
 		return
 	}
 	data := &dto.PopularityRedPocketStart{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.PopularityRedPocketStart(data)
+	client.DefaultEventHandlers.PopularityRedPocketStart(data)
 }
 
-func popularityRedPocketWinnerListHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.PopularityRedPocketWinnerList == nil {
+func popularityRedPocketWinnerListHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.PopularityRedPocketWinnerList == nil {
 		return
 	}
 	data := &dto.PopularityRedPocketWinnerList{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.PopularityRedPocketWinnerList(data)
+	client.DefaultEventHandlers.PopularityRedPocketWinnerList(data)
 }
 
-func noticeMsgHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.NoticeMsg == nil {
+func noticeMsgHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.NoticeMsg == nil {
 		return
 	}
 	data := &dto.NoticeMsg{}
@@ -276,104 +277,104 @@ func noticeMsgHandler(payload *dto.WSPayload) {
 		log.Warnf("noticeMsgHandler unmarshal error: %v", err)
 		return
 	}
-	DefaultEventHandlers.NoticeMsg(data)
+	client.DefaultEventHandlers.NoticeMsg(data)
 }
 
-func unknownEventHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.UnknownEvent == nil {
+func unknownEventHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.UnknownEvent == nil {
 		return
 	}
-	DefaultEventHandlers.UnknownEvent(payload)
+	client.DefaultEventHandlers.UnknownEvent(payload)
 }
 
-func anchorLotAwardHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.AnchorLotAward == nil {
+func anchorLotAwardHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.AnchorLotAward == nil {
 		return
 	}
 	data := &dto.AnchorLotAward{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.AnchorLotAward(data)
+	client.DefaultEventHandlers.AnchorLotAward(data)
 }
 
-func userToastMsgHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.UserToastMsg == nil {
+func userToastMsgHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.UserToastMsg == nil {
 		return
 	}
 	data := &dto.UserToastMsg{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.UserToastMsg(data)
+	client.DefaultEventHandlers.UserToastMsg(data)
 }
 
-func roomChangeHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.RoomChange == nil {
+func roomChangeHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.RoomChange == nil {
 		return
 	}
 	data := &dto.RoomChange{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.RoomChange(data)
+	client.DefaultEventHandlers.RoomChange(data)
 }
 
-func roomBlockMsgHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.RoomBlockMsg == nil {
+func roomBlockMsgHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.RoomBlockMsg == nil {
 		return
 	}
 	data := &dto.RoomBlockMsg{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.RoomBlockMsg(data)
+	client.DefaultEventHandlers.RoomBlockMsg(data)
 }
 
-func matchRoomConfHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.MatchRoomConf == nil {
+func matchRoomConfHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.MatchRoomConf == nil {
 		return
 	}
 	data := &dto.MatchRoomConf{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.MatchRoomConf(data)
+	client.DefaultEventHandlers.MatchRoomConf(data)
 }
 
-func commonNoticeDanmakuHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.CommonNoticeDanmaku == nil {
+func commonNoticeDanmakuHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.CommonNoticeDanmaku == nil {
 		return
 	}
 	data := &dto.CommonNoticeDanmaku{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.CommonNoticeDanmaku(data)
+	client.DefaultEventHandlers.CommonNoticeDanmaku(data)
 }
 
-func anchorLotCheckStatusHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.AnchorLotCheckstatus == nil {
+func anchorLotCheckStatusHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.AnchorLotCheckstatus == nil {
 		return
 	}
 	data := &dto.AnchorLotCheckStatus{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.AnchorLotCheckstatus(data)
+	client.DefaultEventHandlers.AnchorLotCheckstatus(data)
 }
 
-func anchorLotEndHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.AnchorLotEnd == nil {
+func anchorLotEndHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.AnchorLotEnd == nil {
 		return
 	}
 	data := &dto.AnchorLotEnd{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.AnchorLotEnd(data)
+	client.DefaultEventHandlers.AnchorLotEnd(data)
 }
 
-func anchorLotStartHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.AnchorLotStart == nil {
+func anchorLotStartHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.AnchorLotStart == nil {
 		return
 	}
 	data := &dto.AnchorLotStart{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.AnchorLotStart(data)
+	client.DefaultEventHandlers.AnchorLotStart(data)
 }
 
-func tradingScoreHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.TradingScore == nil {
+func tradingScoreHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.TradingScore == nil {
 		return
 	}
 	data := &dto.TradingScore{}
 	jsoniter.Get(payload.Body, "data").ToVal(data)
-	DefaultEventHandlers.TradingScore(data)
+	client.DefaultEventHandlers.TradingScore(data)
 }
 
 // handler_impl(for hygen)

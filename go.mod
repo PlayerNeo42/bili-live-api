@@ -7,6 +7,7 @@ require (
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/json-iterator/go v1.1.12
+	github.com/robfig/cron v1.2.0
 )
 
 require (

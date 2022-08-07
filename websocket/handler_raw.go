@@ -14,14 +14,14 @@ import (
 	"github.com/botplayerneo/bili-live-api/log"
 )
 
-func parseAndHandle(p *dto.WSPayload) error {
+func parseAndHandle(p *dto.WSPayload, client *Client) error {
 	payloads := rawDataParserMap[p.ProtocolVersion](p)
 	for _, payload := range payloads {
 		handler, ok := opCodeHandlerMap[payload.Operation]
 		if !ok {
 			return fmt.Errorf("未知的操作码:%d Body:%s", payload.Operation, string(p.Body))
 		}
-		handler(payload)
+		handler(payload, client)
 	}
 	return nil
 }

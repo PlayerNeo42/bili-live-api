@@ -2,6 +2,7 @@ package websocket
 
 import (
 	"encoding/binary"
+	"encoding/json"
 	"strings"
 
 	jsoniter "github.com/json-iterator/go"
@@ -10,7 +11,7 @@ import (
 	"github.com/botplayerneo/bili-live-api/log"
 )
 
-type opCodeHandler func(*dto.WSPayload)
+type opCodeHandler func(*dto.WSPayload, *Client)
 
 var opCodeHandlerMap = map[dto.OPCode]opCodeHandler{
 	dto.Notification:      notificationHandler,
@@ -19,7 +20,7 @@ var opCodeHandlerMap = map[dto.OPCode]opCodeHandler{
 }
 
 // 通知类消息，弹幕、礼物等
-func notificationHandler(payload *dto.WSPayload) {
+func notificationHandler(payload *dto.WSPayload, client *Client) {
 	eType := jsoniter.Get(payload.Body, "cmd").ToString()
 	var handler eventPayloadHandler
 	// HACK 更新后收到的cmd会变为"DANMU_MSG:4:0:2:2:2:0", 在此特殊处理
@@ -35,20 +36,21 @@ func notificationHandler(payload *dto.WSPayload) {
 			handler = unknownEventHandler
 		}
 	}
-	handler(payload)
+	handler(payload, client)
 }
 
 // 心跳回应,body为人气值
-func heartbeatResponseHandler(payload *dto.WSPayload) {
-	if DefaultEventHandlers.Popularity == nil {
+func heartbeatResponseHandler(payload *dto.WSPayload, client *Client) {
+	if client.DefaultEventHandlers.Popularity == nil {
 		return
 	}
 	popularity := binary.BigEndian.Uint32(payload.Body)
-	DefaultEventHandlers.Popularity(popularity)
+	client.DefaultEventHandlers.Popularity(popularity)
 	log.Debug("收到心跳回应,人气值:", popularity)
 }
 
 // 进房回应，body为空
-func roomEnterResponseHandler(payload *dto.WSPayload) {
-	log.Debug("进房成功")
+func roomEnterResponseHandler(payload *dto.WSPayload, client *Client) {
+	roomJson, _ := json.Marshal(*client)
+	log.Infof("订阅信息：%s", roomJson)
 }

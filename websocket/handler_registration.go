@@ -1,8 +1,6 @@
 package websocket
 
 import (
-	"fmt"
-
 	"github.com/botplayerneo/bili-live-api/dto"
 )
 
@@ -120,7 +118,7 @@ type TradingScoreHandler func(tradingScore *dto.TradingScore)
 type UnknownEventHandler func(unknownEvent *dto.WSPayload)
 
 // DefaultEventHandlers 默认事件处理器,由 RegisterHandlers 注册
-var DefaultEventHandlers struct {
+type DefaultEventHandlers struct {
 	Live                          LiveHandler
 	Preparing                     PreparingHandler
 	Danmaku                       DanmakuHandler
@@ -159,89 +157,4 @@ var DefaultEventHandlers struct {
 	TradingScore                  TradingScoreHandler
 	// handler_struct above(for hygen)
 	UnknownEvent UnknownEventHandler
-}
-
-// RegisterHandlers 注册事件处理函数
-func RegisterHandlers(handlers ...interface{}) error {
-	for _, h := range handlers {
-		switch handler := h.(type) {
-		case DanmakuHandler:
-			DefaultEventHandlers.Danmaku = handler
-		case GiftHandler:
-			DefaultEventHandlers.Gift = handler
-		case SuperChatHandler:
-			DefaultEventHandlers.SuperChat = handler
-		case SuperChatDeleteHandler:
-			DefaultEventHandlers.SuperChatDelete = handler
-		case GuardHandler:
-			DefaultEventHandlers.Guard = handler
-		case PopularityHandler:
-			DefaultEventHandlers.Popularity = handler
-		case LiveHandler:
-			DefaultEventHandlers.Live = handler
-		case PreparingHandler:
-			DefaultEventHandlers.Preparing = handler
-		case EntryEffectHandler:
-			DefaultEventHandlers.EntryEffect = handler
-		case InteractWordHandler:
-			DefaultEventHandlers.InteractWord = handler
-		case ComboSendHandler:
-			DefaultEventHandlers.ComboSend = handler
-		case FansChangeHandler:
-			DefaultEventHandlers.FansChange = handler
-		case InteractiveGameHandler:
-			DefaultEventHandlers.InteractiveGame = handler
-		case OnlineRankCountHandler:
-			DefaultEventHandlers.OnlineRankCount = handler
-		case HotRankChangedHandler:
-			DefaultEventHandlers.HotRankChanged = handler
-		case HotRankChangedV2Handler:
-			DefaultEventHandlers.HotRankChangedV2 = handler
-		case HotRankSettlementHandler:
-			DefaultEventHandlers.HotRankSettlement = handler
-		case HotRankSettlementV2Handler:
-			DefaultEventHandlers.HotRankSettlementV2 = handler
-		case OnlineRankTop3Handler:
-			DefaultEventHandlers.OnlineRankTop3 = handler
-		case OnlineRankV2Handler:
-			DefaultEventHandlers.OnlineRankV2 = handler
-		case StopLiveRoomListHandler:
-			DefaultEventHandlers.StopLiveRoomList = handler
-		case WatchedChangeHandler:
-			DefaultEventHandlers.WatchedChange = handler
-		case WidgetBannerHandler:
-			DefaultEventHandlers.WidgetBanner = handler
-		case PopularityRedPocketStartHandler:
-			DefaultEventHandlers.PopularityRedPocketStart = handler
-		case PopularityRedPocketWinnerListHandler:
-			DefaultEventHandlers.PopularityRedPocketWinnerList = handler
-		case NoticeMsgHandler:
-			DefaultEventHandlers.NoticeMsg = handler
-		case UnknownEventHandler:
-			DefaultEventHandlers.UnknownEvent = handler
-		case AnchorLotAwardHandler:
-			DefaultEventHandlers.AnchorLotAward = handler
-		case UserToastMsgHandler:
-			DefaultEventHandlers.UserToastMsg = handler
-		case RoomChangeHandler:
-			DefaultEventHandlers.RoomChange = handler
-		case RoomBlockMsgHandler:
-			DefaultEventHandlers.RoomBlockMsg = handler
-		case MatchRoomConfHandler:
-			DefaultEventHandlers.MatchRoomConf = handler
-		case CommonNoticeDanmakuHandler:
-			DefaultEventHandlers.CommonNoticeDanmaku = handler
-		case AnchorLotCheckStatusHandler:
-			DefaultEventHandlers.AnchorLotCheckstatus = handler
-		case AnchorLotEndHandler:
-			DefaultEventHandlers.AnchorLotEnd = handler
-		case AnchorLotStartHandler:
-			DefaultEventHandlers.AnchorLotStart = handler
-		case TradingScoreHandler:
-			DefaultEventHandlers.TradingScore = handler
-		default:
-			return fmt.Errorf("未知handler类型: %T", handler)
-		}
-	}
-	return nil
 }

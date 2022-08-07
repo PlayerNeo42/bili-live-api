@@ -6,7 +6,7 @@ type Medal struct {
 	GuardLevel       int    `json:"guard_level"`
 	IconID           int    `json:"icon_id"`
 	IsLighted        int    `json:"is_lighted"`
-	MedalColor       int    `json:"medal_color"`
+	MedalColor       string `json:"medal_color"`
 	MedalColorBorder int    `json:"medal_color_border"`
 	MedalColorEnd    int    `json:"medal_color_end"`
 	MedalColorStart  int    `json:"medal_color_start"`

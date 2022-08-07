@@ -36,7 +36,7 @@ const (
 	EventMatchRoomConf                 EventType = "MATCH_ROOM_CONF"
 	EventCommonNoticeDanmaku           EventType = "COMMON_NOTICE_DANMAKU"
 	EventAnchorLotCheckStatus          EventType = "ANCHOR_LOT_CHECKSTATUS"
-	EventAnchorLotEnd EventType = "ANCHOR_LOT_END"
-	EventAnchorLotStart EventType = "ANCHOR_LOT_START"
-	EventTradingScore EventType = "TRADING_SCORE"
+	EventAnchorLotEnd                  EventType = "ANCHOR_LOT_END"
+	EventAnchorLotStart                EventType = "ANCHOR_LOT_START"
+	EventTradingScore                  EventType = "TRADING_SCORE"
 )

@@ -29,6 +29,16 @@ type RoomInfoResp struct {
 	} `json:"data"`
 }
 
+// RoomInfoResp 直播房间信息
+type HostInfoResp struct {
+	Code    int    `json:"code"`
+	Msg     string `json:"msg"`
+	Message string `json:"message"`
+	Data    struct {
+		RoomID int `json:"room_id"`
+	} `json:"data"`
+}
+
 // GetRoomInfo 获取直播间详细信息
 func GetRoomInfo(shortID int) (*RoomInfoResp, error) {
 	result := &RoomInfoResp{}
