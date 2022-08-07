@@ -6,9 +6,9 @@ import (
 
 	wss "github.com/gorilla/websocket"
 
-	"github.com/botplayerneo/bili-live-api/dto"
-	"github.com/botplayerneo/bili-live-api/log"
-	"github.com/botplayerneo/bili-live-api/resource"
+	"github.com/spelling-dragon/bili-live-api/dto"
+	"github.com/spelling-dragon/bili-live-api/log"
+	"github.com/spelling-dragon/bili-live-api/resource"
 )
 
 const (

@@ -15,7 +15,7 @@ linters-settings:
   gocyclo:
     min-complexity: 10
   goimports:
-    local-prefixes: botplayerneo/
+    local-prefixes: spelling-dragon/
   govet:
     check-shadowing: true
   lll:

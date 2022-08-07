@@ -8,10 +8,10 @@ import (
 
 	jsoniter "github.com/json-iterator/go"
 
-	"github.com/botplayerneo/bili-live-api/dto"
-	"github.com/botplayerneo/bili-live-api/log"
-	"github.com/botplayerneo/bili-live-api/resource"
-	"github.com/botplayerneo/bili-live-api/websocket"
+	"github.com/spelling-dragon/bili-live-api/dto"
+	"github.com/spelling-dragon/bili-live-api/log"
+	"github.com/spelling-dragon/bili-live-api/resource"
+	"github.com/spelling-dragon/bili-live-api/websocket"
 )
 
 // Live 使用 NewLive() 来初始化

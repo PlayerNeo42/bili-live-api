@@ -18,7 +18,7 @@ B站直播相关API的Go语言实现
 ### 安装
 
 ```shell 
-go get github.com/botplayerneo/bili-live-api
+go get github.com/spelling-dragon/bili-live-api
 ```
 
 ### 使用
@@ -29,10 +29,10 @@ package main
 import (
 	"fmt"
 
-	api "github.com/botplayerneo/bili-live-api"
-	"github.com/botplayerneo/bili-live-api/dto"
-	"github.com/botplayerneo/bili-live-api/log"
-	"github.com/botplayerneo/bili-live-api/websocket"
+	api "github.com/spelling-dragon/bili-live-api"
+	"github.com/spelling-dragon/bili-live-api/dto"
+	"github.com/spelling-dragon/bili-live-api/log"
+	"github.com/spelling-dragon/bili-live-api/websocket"
 )
 
 func main() {

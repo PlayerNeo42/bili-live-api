@@ -3,11 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/botplayerneo/bili-live-api/dto"
-	"github.com/botplayerneo/bili-live-api/log"
-	"github.com/botplayerneo/bili-live-api/websocket"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/robfig/cron"
+	"github.com/spelling-dragon/bili-live-api/dto"
+	"github.com/spelling-dragon/bili-live-api/log"
+	"github.com/spelling-dragon/bili-live-api/websocket"
 	"time"
 )
 

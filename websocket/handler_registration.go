@@ -1,7 +1,7 @@
 package websocket
 
 import (
-	"github.com/botplayerneo/bili-live-api/dto"
+	"github.com/spelling-dragon/bili-live-api/dto"
 )
 
 // LiveHandler 开播

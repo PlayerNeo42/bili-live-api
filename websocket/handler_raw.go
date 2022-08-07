@@ -10,8 +10,8 @@ import (
 
 	"github.com/andybalholm/brotli"
 
-	"github.com/botplayerneo/bili-live-api/dto"
-	"github.com/botplayerneo/bili-live-api/log"
+	"github.com/spelling-dragon/bili-live-api/dto"
+	"github.com/spelling-dragon/bili-live-api/log"
 )
 
 func parseAndHandle(p *dto.WSPayload, client *Client) error {

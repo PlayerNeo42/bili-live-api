@@ -3,8 +3,8 @@ package websocket
 import (
 	jsoniter "github.com/json-iterator/go"
 
-	"github.com/botplayerneo/bili-live-api/dto"
-	"github.com/botplayerneo/bili-live-api/log"
+	"github.com/spelling-dragon/bili-live-api/dto"
+	"github.com/spelling-dragon/bili-live-api/log"
 )
 
 type eventPayloadHandler func(*dto.WSPayload, *Client)
