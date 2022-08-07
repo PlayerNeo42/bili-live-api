@@ -1,4 +1,4 @@
-module github.com/botplayerneo/bili-live-api
+module github.com/spelling-dragon/bili-live-api
 
 go 1.17
 
